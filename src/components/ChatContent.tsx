@@ -18,7 +18,6 @@ const ChatContent = ({ messages }: Props) => {
     <div>
       {messages.map((message: Message, index: number) => (
         <>
-          {console.log(message)}
           <div key={index} ref={index === messages.length - 1 ? chat : null} className="flex gap-4 w-full py-4">
             <Avatar>
               {message.role === "assistant" ? (
