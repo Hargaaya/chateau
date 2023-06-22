@@ -1,20 +1,35 @@
 import SyntaxHighlighter from "react-syntax-highlighter";
-import { docco } from "react-syntax-highlighter/dist/esm/styles/hljs";
+import { vs2015 } from "react-syntax-highlighter/dist/esm/styles/hljs";
+import CopyIcon from "@/assets/CopyIcon";
+import { useToast } from "./ui/use-toast";
 
 type Props = {
   text: string;
 };
 
 const Highlighter = ({ text }: Props) => {
-  // split text where there is three ``` which is the start of a code block
   const manipulatedText = text.split("```");
+  const { toast } = useToast();
 
   const language = (text: string) => {
-    // grap the next line after the code block
     const nextLine = text.split("\n")[0];
+    if (nextLine === "") return "javascript";
 
-    console.log(nextLine);
     return nextLine;
+  };
+
+  const removeFirstLine = (text: string) => {
+    const lines = text.split("\n");
+    lines.shift();
+
+    return lines.join("\n");
+  };
+
+  const copy = (text: string) => {
+    navigator.clipboard.writeText(text);
+    toast({
+      description: "Copied to clipboard",
+    });
   };
 
   return (
@@ -23,10 +38,19 @@ const Highlighter = ({ text }: Props) => {
         if (index % 2 === 0) {
           return <p key={index}>{text}</p>;
         } else {
+          const formattedText = removeFirstLine(text);
           return (
-            <SyntaxHighlighter key={index} language={language(text)} style={docco}>
-              {text}
-            </SyntaxHighlighter>
+            <div className="flex flex-col bg-black rounded-lg overflow-clip" key={index}>
+              <span className="text-white flex justify-between items-center p-2">
+                <p>{language(text)}</p>
+                <div onClick={() => copy(formattedText)}>
+                  <CopyIcon className="cursor-pointer" size="16px" />
+                </div>
+              </span>
+              <SyntaxHighlighter key={index} language={language(text)} style={vs2015}>
+                {formattedText}
+              </SyntaxHighlighter>
+            </div>
           );
         }
       })}

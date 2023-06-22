@@ -1,6 +1,7 @@
 import { Kanit } from "next/font/google";
 import "./globals.css";
 import Sidebar from "@/layout/Sidebar";
+import { Toaster } from "@/components/ui/toaster";
 
 const kanit = Kanit({ weight: ["300", "400", "500", "600"], subsets: ["latin"] });
 
@@ -20,6 +21,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
           <Sidebar />
           <div className="lg:ml-64 flex-1">{children}</div>
         </main>
+        <Toaster />
       </body>
     </html>
   );
