@@ -56,6 +56,7 @@ const Settings = () => {
                   <SelectItem value="monokai">Monokai</SelectItem>
                   <SelectItem value="github">Github</SelectItem>
                   <SelectItem value="vs2015">Visual Studio 2015</SelectItem>
+                  <SelectItem value="gruvbox-dark">Gruvbox Dark</SelectItem>
                 </SelectGroup>
               </SelectContent>
             </Select>

@@ -1,5 +1,5 @@
 import SyntaxHighlighter from "react-syntax-highlighter";
-import { dracula, github, monokai, vs2015 } from "react-syntax-highlighter/dist/esm/styles/hljs";
+import { dracula, github, gruvboxDark, monokai, vs2015 } from "react-syntax-highlighter/dist/esm/styles/hljs";
 import CopyIcon from "@/assets/CopyIcon";
 import { useToast } from "./ui/use-toast";
 import { useSelector } from "react-redux";
@@ -24,6 +24,8 @@ const Highlighter = ({ text }: Props) => {
         return vs2015;
       case "monokai":
         return monokai;
+      case "gruvbox-dark":
+        return gruvboxDark;
       default:
         return vs2015;
     }
