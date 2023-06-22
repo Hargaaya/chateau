@@ -2,6 +2,8 @@ import { type Message, useChat } from "ai/react";
 import InputField from "@/components/InputField";
 import ChatContent from "./ChatContent";
 import useLocalStorage from "@/hooks/useLocalStorage";
+import { Suspense } from "react";
+import { Skeleton } from "@/components/ui/skeleton";
 
 type Props = {
   id?: string;
@@ -22,7 +24,9 @@ const Chat = ({ id, initialMessages }: Props) => {
   return (
     <div className="mx-auto w-full max-w-3xl py-4 flex flex-col">
       <div className="mb-24">
-        <ChatContent messages={messages} />
+        <Suspense fallback={<Skeleton className="w-full h-[50vh] rounded-lg" />}>
+          <ChatContent messages={messages} />
+        </Suspense>
       </div>
       <InputField
         handleSubmit={handleSubmit}
