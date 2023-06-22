@@ -60,8 +60,8 @@ const Highlighter = ({ text }: Props) => {
         } else {
           const formattedText = removeFirstLine(text);
           return (
-            <div className="flex flex-col bg-black rounded-lg overflow-clip" key={index}>
-              <span className="text-white flex justify-between items-center p-2">
+            <div className="flex flex-col bg-secondary rounded-lg overflow-clip" key={index}>
+              <span className="flex justify-between items-center p-2">
                 <p>{language(text)}</p>
                 <div onClick={() => copy(formattedText)}>
                   <CopyIcon className="cursor-pointer" size="16px" />

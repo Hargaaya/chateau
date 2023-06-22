@@ -10,7 +10,7 @@ const Sidebar = () => {
   const id = nanoid();
 
   return (
-    <div className="fixed top-0 left-0 h-screen lg:flex flex-col max-h-screen bg-gray-50 hidden lg:w-64 p-4">
+    <div className="fixed top-0 left-0 h-screen lg:flex flex-col max-h-screen border-[0.2px] bg-secondary hidden lg:w-64 p-4">
       <div className="flex flex-col gap-4">
         <h2 className="text-2xl font-bold">Previous Chats</h2>
         <Suspense fallback={<Skeleton className="w-full h-[50vh] rounded-lg bg-gray-300" />}>

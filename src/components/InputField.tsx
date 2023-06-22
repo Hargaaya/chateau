@@ -10,14 +10,11 @@ type Props = {
 
 const InputField = ({ handleSubmit, handleInputChange, input, isLoading }: Props) => {
   return (
-    <form onSubmit={handleSubmit} className="fixed bottom-0 w-full max-w-3xl flex bg-gray-50 rounded-md p-4 items-center mb-6 gap-4">
-      <Input
-        className="bg-white border-gray-400"
-        type="text"
-        value={input}
-        placeholder="Enter your prompt..."
-        onChange={handleInputChange}
-      />
+    <form
+      onSubmit={handleSubmit}
+      className="fixed bottom-0 w-full max-w-3xl flex border-[0.2px] bg-secondary rounded-md p-4 items-center mb-6 gap-4"
+    >
+      <Input type="text" value={input} placeholder="Enter your prompt..." onChange={handleInputChange} />
       <Button disabled={isLoading} type="submit">
         Submit
       </Button>
