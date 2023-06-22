@@ -1,6 +1,6 @@
 "use client";
 
-import React, { use } from "react";
+import React, { useState } from "react";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { SelectGroup } from "@radix-ui/react-select";
@@ -8,11 +8,19 @@ import SettingsIcon from "@/assets/SettingsIcon";
 import { Label } from "@/components/ui/label";
 import { useDispatch, useSelector } from "react-redux";
 import { getSettings, actions as settingsActions } from "@/stores/slices/settingsSlice";
+import { useTheme } from "next-themes";
 
 const Settings = () => {
+  const { setTheme } = useTheme();
   const dispatch = useDispatch();
   const codeTheme = useSelector(getSettings).codeTheme;
   const engine = useSelector(getSettings).engine;
+
+  const [currTheme, setCurrTheme] = useState("system");
+  const handleThemeChange = (value: string) => {
+    setCurrTheme(value);
+    setTheme(value);
+  };
 
   return (
     <Dialog>
@@ -64,7 +72,7 @@ const Settings = () => {
 
           <div className="grid grid-cols-4 items-center gap-4">
             <Label className="text-right">Page Theme</Label>
-            <Select value="auto">
+            <Select onValueChange={handleThemeChange} value={currTheme}>
               <SelectTrigger className="col-span-3">
                 <SelectValue placeholder="Engine" />
               </SelectTrigger>
@@ -72,7 +80,7 @@ const Settings = () => {
                 <SelectGroup>
                   <SelectItem value="dark">Dark Mode</SelectItem>
                   <SelectItem value="light">Light Mode</SelectItem>
-                  <SelectItem value="auto">Auto</SelectItem>
+                  <SelectItem value="system">Auto Detect</SelectItem>
                 </SelectGroup>
               </SelectContent>
             </Select>
