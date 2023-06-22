@@ -1,9 +1,10 @@
 import { type Message, useChat } from "ai/react";
 import InputField from "@/components/InputField";
 import ChatContent from "./ChatContent";
-import useLocalStorage from "@/hooks/useLocalStorage";
 import { Suspense } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
+import { useSelector } from "react-redux";
+import { getSettings } from "@/stores/slices/settingsSlice";
 
 type Props = {
   id?: string;
@@ -11,7 +12,8 @@ type Props = {
 };
 
 const Chat = ({ id, initialMessages }: Props) => {
-  const [engine, setEngine] = useLocalStorage("engine", "gpt-3.5-turbo");
+  const engine = useSelector(getSettings).engine;
+
   const { messages, input, isLoading, handleInputChange, handleSubmit } = useChat({
     initialMessages,
     api: "/api/chat",
@@ -28,14 +30,7 @@ const Chat = ({ id, initialMessages }: Props) => {
           <ChatContent messages={messages} />
         </Suspense>
       </div>
-      <InputField
-        handleSubmit={handleSubmit}
-        handleInputChange={handleInputChange}
-        input={input}
-        isLoading={isLoading}
-        engine={engine}
-        setEngine={setEngine}
-      />
+      <InputField handleSubmit={handleSubmit} handleInputChange={handleInputChange} input={input} isLoading={isLoading} />
     </div>
   );
 };

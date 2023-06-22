@@ -1,7 +1,9 @@
 import SyntaxHighlighter from "react-syntax-highlighter";
-import { vs2015 } from "react-syntax-highlighter/dist/esm/styles/hljs";
+import { dracula, github, monokai, vs2015 } from "react-syntax-highlighter/dist/esm/styles/hljs";
 import CopyIcon from "@/assets/CopyIcon";
 import { useToast } from "./ui/use-toast";
+import { useSelector } from "react-redux";
+import { getSettings } from "@/stores/slices/settingsSlice";
 
 type Props = {
   text: string;
@@ -10,6 +12,22 @@ type Props = {
 const Highlighter = ({ text }: Props) => {
   const manipulatedText = text.split("```");
   const { toast } = useToast();
+  const codeTheme = useSelector(getSettings).codeTheme;
+
+  const getTheme = (theme: string) => {
+    switch (theme) {
+      case "dracula":
+        return dracula;
+      case "github":
+        return github;
+      case "vs2015":
+        return vs2015;
+      case "monokai":
+        return monokai;
+      default:
+        return vs2015;
+    }
+  };
 
   const language = (text: string) => {
     const nextLine = text.split("\n")[0];
@@ -47,7 +65,7 @@ const Highlighter = ({ text }: Props) => {
                   <CopyIcon className="cursor-pointer" size="16px" />
                 </div>
               </span>
-              <SyntaxHighlighter key={index} language={language(text)} style={vs2015}>
+              <SyntaxHighlighter key={index} language={language(text)} style={getTheme(codeTheme)}>
                 {formattedText}
               </SyntaxHighlighter>
             </div>
