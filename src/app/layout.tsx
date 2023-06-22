@@ -5,6 +5,7 @@ import Settings from "@/components/Settings";
 import { Toaster } from "@/components/ui/toaster";
 import { store } from "@/stores/store";
 import { ReduxProvider } from "@/stores/ReduxProvider";
+import { ThemeProvider } from "@/layout/ThemeProvider";
 
 const kanit = Kanit({ weight: ["300", "400", "500", "600"], subsets: ["latin"] });
 
@@ -22,16 +23,18 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   return (
     <html lang="en">
       <body className={kanit.className}>
-        <ReduxProvider preloadedState={preloadedState}>
-          <div className="fixed top-5 right-5">
-            <Settings />
-          </div>
-          <main className="flex min-h-screen w-full">
-            <Sidebar />
-            <div className="lg:ml-64 flex-1">{children}</div>
-          </main>
-          <Toaster />
-        </ReduxProvider>
+        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+          <ReduxProvider preloadedState={preloadedState}>
+            <div className="fixed top-5 right-5">
+              <Settings />
+            </div>
+            <main className="flex min-h-screen w-full">
+              <Sidebar />
+              <div className="lg:ml-64 flex-1">{children}</div>
+            </main>
+            <Toaster />
+          </ReduxProvider>
+        </ThemeProvider>
       </body>
     </html>
   );
