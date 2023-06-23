@@ -23,6 +23,9 @@ const Sidebar = () => {
         <Link href={`/chat/${id}`} className={buttonVariants()}>
           <PlusIcon className="mr-2" size="16px" /> Start a new chat
         </Link>
+        <p className="text-sm font-light mt-6">
+          Made by <a href="https://github.com/hargaaya">Hargaaya Idris 💫</a>
+        </p>
       </div>
     </div>
   );
