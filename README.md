@@ -14,5 +14,9 @@
 
 ### TODO
 
-- [ ] Add Azure AD authentication
-- [ ] Add Azure AD authorization
+- [ ] Add field for API key in settings
+- [ ] Automatically update sidebar chat history when creating a new chat
+- [ ] Add ability to delete chats
+- [ ] Replace input with textarea for chat messages
+- [ ] Add drawer for code snippets
+- [ ] Add ability to delete code snippets
