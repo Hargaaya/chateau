@@ -4,12 +4,12 @@ import ChatCompletion from "@/models/ChatCompletion";
 import mongoConnection from "@/lib/mongoConnection";
 
 export async function POST(req: Request) {
-  const { messages, id, engine } = await req.json();
+  const { messages, id, engine, apiKey } = await req.json();
 
   if (!id) return new Response(JSON.stringify({ error: "No id provided" }), { status: 400 });
 
   const configuration = new Configuration({
-    apiKey: process.env.OPENAI_API_KEY,
+    apiKey: process.env.OPENAI_API_KEY ?? apiKey,
   });
 
   const openai = new OpenAIApi(configuration);

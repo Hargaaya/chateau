@@ -9,12 +9,14 @@ import { Label } from "@/components/ui/label";
 import { useDispatch, useSelector } from "react-redux";
 import { getSettings, actions as settingsActions } from "@/stores/slices/settingsSlice";
 import { useTheme } from "next-themes";
+import { Input } from "@/components/ui/input";
 
 const Settings = () => {
   const { setTheme } = useTheme();
   const dispatch = useDispatch();
   const codeTheme = useSelector(getSettings).codeTheme;
   const engine = useSelector(getSettings).engine;
+  const apiKey = useSelector(getSettings).apiKey;
 
   const [currTheme, setCurrTheme] = useState("system");
   const handleThemeChange = (value: string) => {
@@ -49,6 +51,11 @@ const Settings = () => {
                 </SelectGroup>
               </SelectContent>
             </Select>
+          </div>
+
+          <div className="grid grid-cols-4 items-center gap-4">
+            <Label className="text-right">API Key</Label>
+            <Input className="col-span-3" value={apiKey} onChange={(e) => dispatch(settingsActions.setApiKey(e.target.value))} />
           </div>
 
           <h3 className="text-lg font-bold mt-8 mb-4">Theme Settings</h3>

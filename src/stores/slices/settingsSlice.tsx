@@ -4,6 +4,7 @@ const initialState = {
   settings: {
     engine: "gpt-3.5-turbo",
     codeTheme: "dracula",
+    apiKey: "",
   },
 };
 
@@ -16,6 +17,9 @@ export const { actions, reducer } = createSlice({
     },
     setCodeTheme(state, action) {
       state.settings.codeTheme = action.payload;
+    },
+    setApiKey(state, action) {
+      state.settings.apiKey = action.payload;
     },
   },
 });

@@ -13,13 +13,16 @@ type Props = {
 
 const Chat = ({ id, initialMessages }: Props) => {
   const engine = useSelector(getSettings).engine;
+  const apiKey = useSelector(getSettings).apiKey;
 
   const { messages, input, isLoading, handleInputChange, handleSubmit } = useChat({
     initialMessages,
+    id,
     api: "/api/chat",
     body: {
       id: id,
       engine: engine,
+      apiKey: apiKey,
     },
   });
 
