@@ -4,6 +4,7 @@ import CopyIcon from "@/assets/CopyIcon";
 import { useToast } from "./ui/use-toast";
 import { useSelector } from "react-redux";
 import { getSettings } from "@/stores/slices/settingsSlice";
+import React from "react";
 
 type Props = {
   text: string;
@@ -78,4 +79,6 @@ const Highlighter = ({ text }: Props) => {
   );
 };
 
-export default Highlighter;
+const MemoizedHighlighter = React.memo(Highlighter);
+
+export default MemoizedHighlighter;
