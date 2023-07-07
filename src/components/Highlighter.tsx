@@ -5,6 +5,7 @@ import { useToast } from "./ui/use-toast";
 import { useSelector } from "react-redux";
 import { getSettings } from "@/stores/slices/settingsSlice";
 import React from "react";
+import BookmarkButton from "@/components/BookmarkButton";
 
 type Props = {
   text: string;
@@ -32,7 +33,7 @@ const Highlighter = ({ text }: Props) => {
     }
   };
 
-  const language = (text: string) => {
+  const getLanguage = (text: string) => {
     const nextLine = text.split("\n")[0];
     if (nextLine === "") return "javascript";
 
@@ -53,6 +54,10 @@ const Highlighter = ({ text }: Props) => {
     });
   };
 
+  const saveToBoard = (formattedText: string, language: string) => {
+    console.log(formattedText, language);
+  };
+
   return (
     <>
       {manipulatedText.map((text, index) => {
@@ -60,15 +65,19 @@ const Highlighter = ({ text }: Props) => {
           return <p key={index}>{text}</p>;
         } else {
           const formattedText = removeFirstLine(text);
+          const language = getLanguage(text);
           return (
             <div className="flex flex-col bg-secondary rounded-lg overflow-clip" key={index}>
               <span className="flex justify-between items-center p-2">
-                <p>{language(text)}</p>
-                <div onClick={() => copy(formattedText)}>
-                  <CopyIcon className="cursor-pointer" size="16px" />
-                </div>
+                <p>{language}</p>
+                <span className="flex items-center gap-2">
+                  <BookmarkButton language={language} code={formattedText} />
+                  <div onClick={() => copy(formattedText)}>
+                    <CopyIcon className="cursor-pointer" size="16px" />
+                  </div>
+                </span>
               </span>
-              <SyntaxHighlighter key={index} language={language(text)} style={getTheme(codeTheme)}>
+              <SyntaxHighlighter key={index} language={language} style={getTheme(codeTheme)}>
                 {formattedText}
               </SyntaxHighlighter>
             </div>
