@@ -1,3 +1,5 @@
+"use client";
+
 import PlusIcon from "@/assets/PlusIcon";
 import ChatHistory from "@/components/ChatHistory";
 import { Button, buttonVariants } from "@/components/ui/button";

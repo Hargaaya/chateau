@@ -1,5 +1,3 @@
-"use client";
-
 import { Kanit } from "next/font/google";
 import "./globals.css";
 import Sidebar from "@/layout/Sidebar";
@@ -12,6 +10,7 @@ import { SessionProvider } from "next-auth/react";
 import CodeDrawer from "@/components/CodeDrawer";
 import { Session } from "next-auth";
 import AuthWrapper from "@/components/AuthWrapper";
+import NextAuthProvider from "@/components/NextAuthProvider";
 
 const kanit = Kanit({ weight: ["300", "400", "500", "600"], subsets: ["latin"] });
 
@@ -34,7 +33,7 @@ export default function RootLayout({ children, session }: LayoutProps) {
   return (
     <html lang="en">
       <body className={kanit.className}>
-        <SessionProvider session={session}>
+        <NextAuthProvider session={session}>
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <ReduxProvider preloadedState={preloadedState}>
               <AuthWrapper>
@@ -52,7 +51,7 @@ export default function RootLayout({ children, session }: LayoutProps) {
               </AuthWrapper>
             </ReduxProvider>
           </ThemeProvider>
-        </SessionProvider>
+        </NextAuthProvider>
       </body>
     </html>
   );
