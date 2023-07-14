@@ -1,12 +1,20 @@
 import PlusIcon from "@/assets/PlusIcon";
 import ChatHistory from "@/components/ChatHistory";
-import { buttonVariants } from "@/components/ui/button";
+import { Button, buttonVariants } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
 import { nanoid } from "nanoid";
+import { Session } from "next-auth";
+import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import { Suspense } from "react";
 
 const Sidebar = () => {
+  const {
+    data: { user },
+  } = useSession() as { data: Session };
+  const name = user?.name || "User";
+  const image = user?.image || "/brain.png";
+
   const id = nanoid();
 
   return (
@@ -18,6 +26,10 @@ const Sidebar = () => {
         </Suspense>
       </div>
       <div className="fixed bottom-0 left-0 w-full lg:w-64 p-4">
+        <Button className="max-w-full mb-4" onClick={() => signOut()}>
+          <img className="rounded-full h-6 w-6 mr-2" src={image} alt={name} />
+          <p className="truncate">Sign Out {name}</p>
+        </Button>
         <h2 className="text-2xl font-bold">Start a new chat</h2>
         <p className="text-xl font-light mb-3">Click the button below to start a new chat with Chateau.</p>
         <Link href={`/chat/${id}`} className={buttonVariants()}>

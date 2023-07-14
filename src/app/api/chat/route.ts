@@ -2,9 +2,12 @@ import { Configuration, OpenAIApi } from "openai-edge";
 import { OpenAIStream, StreamingTextResponse } from "ai";
 import ChatCompletion from "@/models/ChatCompletion";
 import mongoConnection from "@/lib/mongoConnection";
+import { Session, getServerSession } from "next-auth";
+import authOptions from "@/lib/auth";
 
 export async function POST(req: Request) {
   const { messages, id, engine, apiKey } = await req.json();
+  const { user } = (await getServerSession(authOptions)) as Session;
 
   if (!id) return new Response(JSON.stringify({ error: "No id provided" }), { status: 400 });
 
@@ -24,7 +27,7 @@ export async function POST(req: Request) {
 
   const stream = OpenAIStream(response, {
     async onCompletion(completion: string) {
-      const convoExists = await ChatCompletion.exists({ _id: id });
+      const convoExists = await ChatCompletion.exists({ _id: id, email: user?.email });
 
       messages.push({
         content: completion,
@@ -36,6 +39,7 @@ export async function POST(req: Request) {
       } else {
         await ChatCompletion.create({
           _id: id,
+          email: user?.email,
           text: messages[0].content,
           messages,
         });

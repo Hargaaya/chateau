@@ -1,5 +1,6 @@
 interface ChatCompletion {
   _id: string;
+  email: string;
   text: string;
   messages: ChatCompletionRequestMessage[];
 }
