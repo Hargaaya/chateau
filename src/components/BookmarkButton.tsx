@@ -12,18 +12,18 @@ import hash from "object-hash";
 
 type Props = {
   language: string;
-  code: string;
+  content: string;
 };
 
-const BookmarkButton = ({ language, code }: Props) => {
+const BookmarkButton = ({ language, content }: Props) => {
   const [selectedBoard, setSelectedBoard] = useState<string>("");
   const [addNewBoard, setAddNewBoard] = useState(false);
   const [newBoardName, setNewBoardName] = useState("");
-  const [boards, setBoards] = useState<Userboard[]>([]);
+  const [boards, setBoards] = useState<Board[]>([]);
   const snippet = {
+    hash: hash({ language, content }),
     language,
-    code,
-    hash: hash({ language, code }),
+    content,
   };
 
   const handleBoardSelect = (id: string) => {
@@ -32,21 +32,21 @@ const BookmarkButton = ({ language, code }: Props) => {
   };
 
   const addBoard = () => {
-    const id = nanoid();
+    const _id = nanoid();
     const name = newBoardName;
-    const newBoard = { id, name, snippets: [snippet] };
+    const newBoard = { _id, name, snippets: [snippet] };
     setBoards([...boards, newBoard]);
     console.log("addBoard");
   };
 
   const saveBoard = () => {
-    const board = boards.find((board) => board.id === selectedBoard);
+    const board = boards.find((board) => board._id === selectedBoard);
     if (board) {
       const newBoard = {
         ...board,
         snippets: updateSnippets(board.snippets, snippet),
       };
-      const newBoards = boards.map((board) => (board.id === selectedBoard ? newBoard : board));
+      const newBoards = boards.map((board) => (board._id === selectedBoard ? newBoard : board));
       setBoards(newBoards);
     }
     console.log("saveBoard");
@@ -97,15 +97,15 @@ const BookmarkButton = ({ language, code }: Props) => {
               onChange={(e) => setNewBoardName(e.target.value)}
             />
           ) : (
-            <Select onValueChange={handleBoardSelect} defaultValue={hasBoards ? boards[0].id : "no-boards"}>
+            <Select onValueChange={handleBoardSelect} defaultValue={hasBoards ? boards[0]._id : "no-boards"}>
               <SelectTrigger className="col-span-3">
                 <SelectValue placeholder="Engine" />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
                   {hasBoards ? (
-                    boards?.map((board: Userboard) => (
-                      <SelectItem key={board.id} value={board.id}>
+                    boards?.map((board: Board) => (
+                      <SelectItem key={board._id} value={board._id as string}>
                         {board.name}
                       </SelectItem>
                     ))

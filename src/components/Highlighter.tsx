@@ -3,7 +3,7 @@ import { dracula, github, gruvboxDark, monokai, vs2015 } from "react-syntax-high
 import CopyIcon from "@/assets/CopyIcon";
 import { useToast } from "./ui/use-toast";
 import { useSelector } from "react-redux";
-import { getSettings } from "@/stores/slices/settingsSlice";
+import { getLocalSettings } from "@/stores/slices/settingsSlice";
 import React from "react";
 import BookmarkButton from "@/components/BookmarkButton";
 
@@ -14,7 +14,7 @@ type Props = {
 const Highlighter = ({ text }: Props) => {
   const manipulatedText = text.split("```");
   const { toast } = useToast();
-  const codeTheme = useSelector(getSettings).codeTheme;
+  const codeTheme = useSelector(getLocalSettings).codeTheme;
 
   const getTheme = (theme: string) => {
     switch (theme) {
@@ -71,7 +71,7 @@ const Highlighter = ({ text }: Props) => {
               <span className="flex justify-between items-center p-2">
                 <p>{language}</p>
                 <span className="flex items-center gap-2">
-                  <BookmarkButton language={language} code={formattedText} />
+                  <BookmarkButton language={language} content={formattedText} />
                   <div onClick={() => copy(formattedText)}>
                     <CopyIcon className="cursor-pointer" size="16px" />
                   </div>

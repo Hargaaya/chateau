@@ -1,28 +1,45 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { SelectGroup } from "@radix-ui/react-select";
 import SettingsIcon from "@/assets/SettingsIcon";
 import { Label } from "@/components/ui/label";
-import { useDispatch, useSelector } from "react-redux";
-import { getSettings, actions as settingsActions } from "@/stores/slices/settingsSlice";
+import { useDispatch } from "react-redux";
+import { actions as localSettingsActions } from "@/stores/slices/settingsSlice";
 import { useTheme } from "next-themes";
 import { Input } from "@/components/ui/input";
+import useSettings from "@/hooks/useSettings";
 
 const Settings = () => {
   const { setTheme } = useTheme();
   const dispatch = useDispatch();
-  const codeTheme = useSelector(getSettings).codeTheme;
-  const engine = useSelector(getSettings).engine;
-  const apiKey = useSelector(getSettings).apiKey;
 
+  useEffect(() => {
+    async function syncSettings() {
+      const res = await fetch("api/settings");
+      const { data: settings } = await res.json();
+
+      return settings;
+    }
+
+    syncSettings().then((set) => {
+      dispatch(localSettingsActions.setLocalSettings(set));
+    });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
+  // TODO: Persist the page theme settings
   const [currTheme, setCurrTheme] = useState("system");
   const handleThemeChange = (value: string) => {
     setCurrTheme(value);
     setTheme(value);
   };
+
+  const [apiKey, setApiKey] = useSettings<string>("apiKey");
+  const [model, setModel] = useSettings<string>("model");
+  const [codeTheme, setCodeTheme] = useSettings<string>("codeTheme");
 
   return (
     <Dialog>
@@ -30,13 +47,13 @@ const Settings = () => {
         <SettingsIcon size="28px" />
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
-        <h3 className="text-lg font-bold mt-8 mb-4">Engine Settings</h3>
+        <h3 className="text-lg font-bold mt-8 mb-4">Model Settings</h3>
         <div className="grid gap-4 py-4">
           <div className="grid grid-cols-4 items-center gap-4">
-            <Label className="text-right">Engine</Label>
-            <Select onValueChange={(value) => dispatch(settingsActions.setEngine(value))} value={engine}>
+            <Label className="text-right">Model</Label>
+            <Select onValueChange={(value) => setModel(value)} value={model}>
               <SelectTrigger className="col-span-3">
-                <SelectValue placeholder="Engine" />
+                <SelectValue placeholder="Model" />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
@@ -55,15 +72,15 @@ const Settings = () => {
 
           <div className="grid grid-cols-4 items-center gap-4">
             <Label className="text-right">API Key</Label>
-            <Input className="col-span-3" value={apiKey} onChange={(e) => dispatch(settingsActions.setApiKey(e.target.value))} />
+            <Input className="col-span-3" value={apiKey ?? ""} onChange={(e) => setApiKey(e.target.value)} />
           </div>
 
           <h3 className="text-lg font-bold mt-8 mb-4">Theme Settings</h3>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label className="text-right">Code Theme</Label>
-            <Select onValueChange={(value) => dispatch(settingsActions.setCodeTheme(value))} value={codeTheme}>
+            <Select onValueChange={(value) => setCodeTheme(value)} value={codeTheme}>
               <SelectTrigger className="col-span-3">
-                <SelectValue placeholder="Engine" />
+                <SelectValue placeholder="Code Theme" />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>
@@ -81,7 +98,7 @@ const Settings = () => {
             <Label className="text-right">Page Theme</Label>
             <Select onValueChange={handleThemeChange} value={currTheme}>
               <SelectTrigger className="col-span-3">
-                <SelectValue placeholder="Engine" />
+                <SelectValue placeholder="Page Theme" />
               </SelectTrigger>
               <SelectContent>
                 <SelectGroup>

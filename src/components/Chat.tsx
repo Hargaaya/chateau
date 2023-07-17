@@ -4,7 +4,7 @@ import ChatContent from "./ChatContent";
 import { Suspense } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useSelector } from "react-redux";
-import { getSettings } from "@/stores/slices/settingsSlice";
+import { getLocalSettings } from "@/stores/slices/settingsSlice";
 
 type Props = {
   id?: string;
@@ -12,16 +12,16 @@ type Props = {
 };
 
 const Chat = ({ id, initialMessages }: Props) => {
-  const engine = useSelector(getSettings).engine;
-  const apiKey = useSelector(getSettings).apiKey;
+  const model = useSelector(getLocalSettings).model;
+  const apiKey = useSelector(getLocalSettings).apiKey;
 
   const { messages, input, isLoading, handleInputChange, handleSubmit } = useChat({
     initialMessages,
     id,
-    api: "/api/chat",
+    api: "/api/chat/talk",
     body: {
       id: id,
-      engine: engine,
+      model: model,
       apiKey: apiKey,
     },
   });
