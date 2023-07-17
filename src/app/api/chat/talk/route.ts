@@ -13,7 +13,7 @@ export async function POST(req: NextRequest) {
   const { user } = (await getServerSession(authOptions)) as Session;
   if (!user?.email) return NextResponse.redirect("/");
 
-  const { messages, id, engine, apiKey } = await req.json();
+  const { messages, id, model, apiKey } = await req.json();
   if (!id) return new NextResponse(JSON.stringify({ error: "No id provided" }), { status: 400 });
 
   const configuration = new Configuration({
@@ -23,7 +23,7 @@ export async function POST(req: NextRequest) {
   const openai = new OpenAIApi(configuration);
 
   const response = await openai.createChatCompletion({
-    model: engine ?? "gpt-3.5-turbo",
+    model: model ?? "gpt-3.5-turbo",
     stream: true,
     messages,
   });
