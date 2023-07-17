@@ -70,6 +70,11 @@ export default class ChatRepository implements ChatRepositoryBase {
 
   async deleteChat(id: string): Promise<void> {
     await mongoConnection();
-    await User.deleteOne({ "messages._id": id });
+    await User.updateOne(
+      { _id: this.email },
+      {
+        $pull: { "messages._id": id },
+      }
+    );
   }
 }
