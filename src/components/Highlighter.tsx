@@ -3,7 +3,7 @@ import { dracula, github, gruvboxDark, monokai, vs2015 } from "react-syntax-high
 import CopyIcon from "@/assets/CopyIcon";
 import { useToast } from "./ui/use-toast";
 import { useSelector } from "react-redux";
-import { getSettings } from "@/stores/slices/settingsSlice";
+import { getLocalSettings } from "@/stores/slices/settingsSlice";
 import React from "react";
 import BookmarkButton from "@/components/BookmarkButton";
 
@@ -14,7 +14,7 @@ type Props = {
 const Highlighter = ({ text }: Props) => {
   const manipulatedText = text.split("```");
   const { toast } = useToast();
-  const codeTheme = useSelector(getSettings).codeTheme;
+  const codeTheme = useSelector(getLocalSettings).codeTheme;
 
   const getTheme = (theme: string) => {
     switch (theme) {
