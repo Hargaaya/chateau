@@ -1,16 +1,15 @@
-import mongoConnection from "@/lib/mongoConnection";
-import ChatCompletion from "@/models/ChatCompletion";
-import { NextApiRequest } from "next";
 import { Session, getServerSession } from "next-auth";
 import { NextResponse } from "next/server";
 import authOptions from "@/lib/auth";
+import ChatRepository from "@/repositories/chatRepository";
 
-export async function GET(req: Request, res: Response) {
-  const session = await getServerSession(authOptions);
-  const { user } = session as Session;
-  await mongoConnection();
-  console.log(user?.email);
-  const data = await ChatCompletion.find({ email: user?.email }, "-messages -__v");
+export async function GET() {
+  const { user } = (await getServerSession(authOptions)) as Session;
+  if (!user?.email) return NextResponse.redirect("/");
 
-  return NextResponse.json(data);
+  const chatRepository = new ChatRepository(user?.email);
+  const history = await chatRepository.getChatHistory();
+  if (!history) return NextResponse.json({ error: "could not find history" }, { status: 400 });
+
+  return NextResponse.json(history);
 }
