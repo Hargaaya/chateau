@@ -17,7 +17,7 @@ export default function Page({ params }: Props) {
   useEffect(() => {
     const getConvo = async () => {
       const res = await fetch(`/api/chat/${id}`);
-      const data = (await res.json()) as ChatCompletion;
+      const data = (await res.json()) as Chat;
       if (data) setInitialMessages(data.messages);
     };
 

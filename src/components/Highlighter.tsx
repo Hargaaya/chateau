@@ -71,7 +71,7 @@ const Highlighter = ({ text }: Props) => {
               <span className="flex justify-between items-center p-2">
                 <p>{language}</p>
                 <span className="flex items-center gap-2">
-                  <BookmarkButton language={language} code={formattedText} />
+                  <BookmarkButton language={language} content={formattedText} />
                   <div onClick={() => copy(formattedText)}>
                     <CopyIcon className="cursor-pointer" size="16px" />
                   </div>

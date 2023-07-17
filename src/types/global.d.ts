@@ -11,7 +11,14 @@ interface ChatHistory {
   title: string;
 }
 
-interface ChatCompletion extends ChatCompletionRequestMessage {
+declare type Message = {
+  id: string;
+  createdAt?: Date;
+  content: string;
+  role: "system" | "user" | "assistant";
+};
+
+interface ChatCompletion extends Message {
   liked: boolean;
 }
 
