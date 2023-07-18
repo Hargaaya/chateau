@@ -11,6 +11,7 @@ import CodeDrawer from "@/components/CodeDrawer";
 import { Session } from "next-auth";
 import AuthWrapper from "@/components/AuthWrapper";
 import NextAuthProvider from "@/components/NextAuthProvider";
+import InitProvider from "@/components/InitProvider";
 
 const kanit = Kanit({ weight: ["300", "400", "500", "600"], subsets: ["latin"] });
 
@@ -37,17 +38,19 @@ export default function RootLayout({ children, session }: LayoutProps) {
           <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
             <ReduxProvider preloadedState={preloadedState}>
               <AuthWrapper>
-                <div className="fixed top-5 right-5">
-                  <Settings />
-                </div>
-                <div className="fixed top-16 right-5">
-                  <CodeDrawer />
-                </div>
-                <main className="flex min-h-screen w-full">
-                  <Sidebar />
-                  <div className="lg:ml-64 flex-1">{children}</div>
-                </main>
-                <Toaster />
+                <InitProvider>
+                  <div className="fixed top-5 right-5">
+                    <Settings />
+                  </div>
+                  <div className="fixed top-16 right-5">
+                    <CodeDrawer />
+                  </div>
+                  <main className="flex min-h-screen w-full">
+                    <Sidebar />
+                    <div className="lg:ml-64 flex-1">{children}</div>
+                  </main>
+                  <Toaster />
+                </InitProvider>
               </AuthWrapper>
             </ReduxProvider>
           </ThemeProvider>
