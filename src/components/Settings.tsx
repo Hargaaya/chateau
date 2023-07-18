@@ -6,40 +6,21 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { SelectGroup } from "@radix-ui/react-select";
 import SettingsIcon from "@/assets/SettingsIcon";
 import { Label } from "@/components/ui/label";
-import { useDispatch } from "react-redux";
-import { actions as localSettingsActions } from "@/stores/slices/settingsSlice";
 import { useTheme } from "next-themes";
 import { Input } from "@/components/ui/input";
 import useSettings from "@/hooks/useSettings";
 
 const Settings = () => {
   const { setTheme } = useTheme();
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    async function syncSettings() {
-      const res = await fetch("api/settings");
-      const { data: settings } = await res.json();
-
-      return settings;
-    }
-
-    syncSettings().then((set) => {
-      dispatch(localSettingsActions.setLocalSettings(set));
-    });
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
-
-  // TODO: Persist the page theme settings
-  const [currTheme, setCurrTheme] = useState("system");
-  const handleThemeChange = (value: string) => {
-    setCurrTheme(value);
-    setTheme(value);
-  };
 
   const [apiKey, setApiKey] = useSettings<string>("apiKey");
   const [model, setModel] = useSettings<string>("model");
   const [codeTheme, setCodeTheme] = useSettings<string>("codeTheme");
+  const [pageTheme, setPageTheme] = useSettings<string>("theme");
+
+  useEffect(() => {
+    setTheme(pageTheme as string);
+  }, [pageTheme, setTheme]);
 
   return (
     <Dialog>
@@ -72,7 +53,7 @@ const Settings = () => {
 
           <div className="grid grid-cols-4 items-center gap-4">
             <Label className="text-right">API Key</Label>
-            <Input className="col-span-3" value={apiKey ?? ""} onChange={(e) => setApiKey(e.target.value)} />
+            <Input className="col-span-3" value={apiKey} onChange={(e) => setApiKey(e.target.value)} />
           </div>
 
           <h3 className="text-lg font-bold mt-8 mb-4">Theme Settings</h3>
@@ -96,7 +77,7 @@ const Settings = () => {
 
           <div className="grid grid-cols-4 items-center gap-4">
             <Label className="text-right">Page Theme</Label>
-            <Select onValueChange={handleThemeChange} value={currTheme}>
+            <Select onValueChange={(value) => setPageTheme(value)} value={pageTheme}>
               <SelectTrigger className="col-span-3">
                 <SelectValue placeholder="Page Theme" />
               </SelectTrigger>

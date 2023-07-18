@@ -13,8 +13,7 @@ function useSettings<T>(key: string): [T | undefined, (value: T) => void] {
 
   useEffect(() => {
     setSetting(localSettings[key as keyof Settings] as T);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [localSettings, key]);
 
   const persistSettings = async (value: T): Promise<void> => {
     const updatedSettings = {
