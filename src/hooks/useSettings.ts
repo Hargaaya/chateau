@@ -31,7 +31,7 @@ function useSettings<T>(key: string): [T | undefined, (value: T) => void] {
 }
 
 async function postSettings(settings: Settings): Promise<void> {
-  await fetch("api/settings", {
+  await fetch("/api/settings", {
     method: "POST",
     body: JSON.stringify({
       settings,
