@@ -5,6 +5,7 @@ import { Suspense } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
 import { useSelector } from "react-redux";
 import { getLocalSettings } from "@/stores/slices/settingsSlice";
+import { useSWRConfig } from "swr";
 
 type Props = {
   id?: string;
@@ -14,6 +15,7 @@ type Props = {
 const Chat = ({ id, initialMessages }: Props) => {
   const model = useSelector(getLocalSettings).model;
   const apiKey = useSelector(getLocalSettings).apiKey;
+  const { mutate } = useSWRConfig();
 
   const { messages, input, isLoading, handleInputChange, handleSubmit } = useChat({
     initialMessages,
@@ -23,6 +25,10 @@ const Chat = ({ id, initialMessages }: Props) => {
       id: id,
       model: model,
       apiKey: apiKey,
+    },
+    onFinish: () => {
+      if (initialMessages) return;
+      mutate("/api/chat/history");
     },
   });
 
