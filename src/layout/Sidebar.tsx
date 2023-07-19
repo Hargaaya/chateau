@@ -7,17 +7,21 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { nanoid } from "nanoid";
 import { Session } from "next-auth";
 import { signOut, useSession } from "next-auth/react";
-import Link from "next/link";
-import { Suspense } from "react";
+import { useRouter } from "next/navigation";
+import { MouseEvent, Suspense } from "react";
 
 const Sidebar = () => {
+  const router = useRouter();
   const {
     data: { user },
   } = useSession() as { data: Session };
   const name = user?.name || "User";
   const image = user?.image || "/brain.png";
 
-  const id = nanoid();
+  const createNewChat = (_: MouseEvent<HTMLButtonElement>) => {
+    const id = nanoid();
+    router.push(`/chat/${id}`);
+  };
 
   return (
     <div className="fixed top-0 left-0 h-screen lg:flex flex-col max-h-screen border-[0.2px] bg-secondary hidden lg:w-64 p-4">
@@ -34,9 +38,9 @@ const Sidebar = () => {
         </Button>
         <h2 className="text-2xl font-bold">Start a new chat</h2>
         <p className="text-xl font-light mb-3">Click the button below to start a new chat with Chateau.</p>
-        <Link href={`/chat/${id}`} className={buttonVariants()}>
+        <Button onClick={createNewChat} className={buttonVariants()}>
           <PlusIcon className="mr-2" size="16px" /> Start a new chat
-        </Link>
+        </Button>
         <p className="text-sm font-light mt-6">
           Made by <a href="https://github.com/hargaaya">Hargaaya Idris 💫</a>
         </p>
