@@ -13,7 +13,7 @@ const InitProvider = ({ children }: Props) => {
 
   useEffect(() => {
     async function syncSettings() {
-      const res = await fetch("api/settings");
+      const res = await fetch("/api/settings");
       const { data: settings } = await res.json();
 
       return settings;
