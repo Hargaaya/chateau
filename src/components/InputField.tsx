@@ -4,7 +4,7 @@ import { ChangeEvent, KeyboardEvent, useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { getLocalSettings } from "@/stores/slices/settingsSlice";
 import validateApiKey from "@/utils/validateApiKey";
-import { RequestOptions } from "ai";
+import { type RequestOptions } from "ai/dist";
 import InputToolbar from "./InputToolbar";
 
 type Props = {

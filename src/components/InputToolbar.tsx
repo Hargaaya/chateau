@@ -1,4 +1,4 @@
-import { RequestOptions } from "ai";
+import { type RequestOptions } from "ai/dist";
 import { RefreshCw, StopCircle } from "lucide-react";
 import React from "react";
 
