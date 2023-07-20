@@ -1,8 +1,9 @@
 "use client";
 
 import Chat from "@/components/Chat";
-import { type Message } from "ai";
-import { useEffect, useState } from "react";
+import { Skeleton } from "@/components/ui/skeleton";
+import fetcher from "@/lib/fetcher";
+import useSWR from "swr";
 
 type Props = {
   params: {
@@ -12,21 +13,15 @@ type Props = {
 
 export default function Page({ params }: Props) {
   const { id } = params;
-  const [initialMessages, setInitialMessages] = useState<Message[]>([]);
-
-  useEffect(() => {
-    const getConvo = async () => {
-      const res = await fetch(`/api/chat/${id}`);
-      const data = (await res.json()) as Chat;
-      if (data) setInitialMessages(data.messages);
-    };
-
-    getConvo();
-  }, [id]);
+  const { data, error } = useSWR<Chat>(`/api/chat/${id}`, fetcher);
 
   return (
     <main className="flex min-h-screen flex-col items-center justify-between">
-      <Chat id={id} initialMessages={initialMessages} />
+      {error && <p>An error occured getting your history. Try the button below in a while 🐢</p>}
+      {!data && (
+        <Skeleton className="max-w-3xl w-full h-[90vh] m-10 rounded-lg bg-secondary flex items-center justify-center">Loading...</Skeleton>
+      )}
+      {data && <Chat id={id} initialMessages={data.messages} />}
     </main>
   );
 }
