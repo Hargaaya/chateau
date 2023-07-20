@@ -17,7 +17,7 @@ const Chat = ({ id, initialMessages }: Props) => {
   const apiKey = useSelector(getLocalSettings).apiKey;
   const { mutate } = useSWRConfig();
 
-  const { messages, input, isLoading, handleInputChange, handleSubmit } = useChat({
+  const { messages, input, isLoading, handleInputChange, handleSubmit, stop, reload } = useChat({
     initialMessages,
     id,
     api: "/api/chat/talk",
@@ -34,12 +34,19 @@ const Chat = ({ id, initialMessages }: Props) => {
 
   return (
     <div className="mx-auto w-full max-w-3xl py-4 flex flex-col">
-      <div className="mb-24">
+      <div className="mb-56">
         <Suspense fallback={<Skeleton className="w-full h-[50vh] rounded-lg" />}>
           <ChatContent messages={messages} />
         </Suspense>
       </div>
-      <InputField handleSubmit={handleSubmit} handleInputChange={handleInputChange} input={input} isLoading={isLoading} />
+      <InputField
+        handleSubmit={handleSubmit}
+        handleInputChange={handleInputChange}
+        stop={stop}
+        reload={reload}
+        input={input}
+        isLoading={isLoading}
+      />
     </div>
   );
 };
