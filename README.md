@@ -18,7 +18,7 @@
 - [x] Add single sign-on with Github
 - [x] Sync settings with database
 - [x] Replace input with textarea for chat messages
-- [ ] Automatically update sidebar chat history when creating a new chat
+- [x] Automatically update sidebar chat history when creating a new chat
 - [ ] Add ability to delete chats
 - [ ] Add drawer for code snippets
 - [ ] Add ability to delete code snippets
