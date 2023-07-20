@@ -17,8 +17,9 @@
 - [x] Add field for API key in settings
 - [x] Add single sign-on with Github
 - [x] Sync settings with database
-- [ ] Automatically update sidebar chat history when creating a new chat
+- [x] Replace input with textarea for chat messages
+- [x] Automatically update sidebar chat history when creating a new chat
 - [ ] Add ability to delete chats
-- [ ] Replace input with textarea for chat messages
 - [ ] Add drawer for code snippets
 - [ ] Add ability to delete code snippets
+- [ ] Fork button for chat messages
