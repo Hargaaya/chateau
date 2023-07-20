@@ -1,10 +1,9 @@
-import { type RequestOptions } from "ai/dist";
 import { RefreshCw, StopCircle } from "lucide-react";
 import React from "react";
 
 type Props = {
   stop: () => void;
-  reload: (options?: RequestOptions) => Promise<string | null | undefined>;
+  reload: () => Promise<string | null | undefined>;
 };
 
 const InputToolbar = ({ stop, reload }: Props) => {

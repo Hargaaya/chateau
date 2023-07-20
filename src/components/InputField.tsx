@@ -4,14 +4,13 @@ import { ChangeEvent, KeyboardEvent, useEffect, useRef, useState } from "react";
 import { useSelector } from "react-redux";
 import { getLocalSettings } from "@/stores/slices/settingsSlice";
 import validateApiKey from "@/utils/validateApiKey";
-import { type RequestOptions } from "ai/dist";
 import InputToolbar from "./InputToolbar";
 
 type Props = {
   handleSubmit: (e: React.FormEvent<HTMLFormElement>) => void;
   handleInputChange: (e: React.ChangeEvent<HTMLInputElement> | React.ChangeEvent<HTMLTextAreaElement>) => void;
   stop: () => void;
-  reload: (options?: RequestOptions) => Promise<string | null | undefined>;
+  reload: () => Promise<string | null | undefined>;
   input: string;
   isLoading: boolean;
 };
