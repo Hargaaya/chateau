@@ -19,7 +19,8 @@
 - [x] Sync settings with database
 - [x] Replace input with textarea for chat messages
 - [x] Automatically update sidebar chat history when creating a new chat
-- [ ] Add ability to delete chats
+- [x] Add ability to delete and rename chats
 - [ ] Add drawer for code snippets
-- [ ] Add ability to delete code snippets
+- [ ] Add ability to delete, rename and add code snippets
 - [ ] Fork button for chat messages
+- [ ] Add ability to upload pdf files, excel files, etc.

@@ -14,7 +14,7 @@ export async function GET(_: Request, context: any) {
   await mongoConnection();
   const chatRepository = new ChatRepository(user?.email);
   const messages = await chatRepository.getChatMessages(id);
-  if (!messages) return NextResponse.json({ error: "could not find messages" }, { status: 400 });
+  if (!messages) return NextResponse.json({ error: "could not find messages" }, { status: 200 });
 
   return NextResponse.json(messages);
 }
