@@ -53,7 +53,9 @@ class BoardRepository implements BoardRepositoryBase {
         "boards._id": board._id,
       },
       {
-        $set: { board },
+        $set: {
+          "boards.$": board,
+        },
       }
     );
   }
