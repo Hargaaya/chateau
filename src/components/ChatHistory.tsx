@@ -100,7 +100,7 @@ const ChatHistoryItem = ({ _id, title, isEdit, deleteChat, updateTitle }: ChatHi
   }, [title]);
 
   const memoizedUpdateHandler = useMemo(() => {
-    return debounce<typeof updateTitle>(updateTitle, 600);
+    return debounce<typeof updateTitle>(updateTitle, 2000);
   }, [updateTitle]);
 
   const updateHandler = (event: ChangeEvent<HTMLInputElement>) => {
