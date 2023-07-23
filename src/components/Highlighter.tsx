@@ -5,7 +5,7 @@ import { useToast } from "./ui/use-toast";
 import { useSelector } from "react-redux";
 import { getLocalSettings } from "@/stores/slices/settingsSlice";
 import React from "react";
-import BookmarkButton from "@/components/BookmarkButton";
+import BoardPopover from "@/components/bookmark/BoardPopover";
 
 type Props = {
   text: string;
@@ -54,10 +54,6 @@ const Highlighter = ({ text }: Props) => {
     });
   };
 
-  const saveToBoard = (formattedText: string, language: string) => {
-    console.log(formattedText, language);
-  };
-
   return (
     <>
       {manipulatedText.map((text, index) => {
@@ -71,7 +67,7 @@ const Highlighter = ({ text }: Props) => {
               <span className="flex justify-between items-center p-2">
                 <p>{language}</p>
                 <span className="flex items-center gap-2">
-                  <BookmarkButton language={language} content={formattedText} />
+                  <BoardPopover language={language} content={formattedText} />
                   <div onClick={() => copy(formattedText)}>
                     <CopyIcon className="cursor-pointer" size="16px" />
                   </div>

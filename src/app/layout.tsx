@@ -6,8 +6,7 @@ import { Toaster } from "@/components/ui/toaster";
 import { store } from "@/stores/store";
 import { ReduxProvider } from "@/stores/ReduxProvider";
 import { ThemeProvider } from "@/layout/ThemeProvider";
-import { SessionProvider } from "next-auth/react";
-import CodeDrawer from "@/components/CodeDrawer";
+import BoardDrawer from "@/components/bookmark/BoardDrawer";
 import { Session } from "next-auth";
 import AuthWrapper from "@/components/AuthWrapper";
 import NextAuthProvider from "@/components/NextAuthProvider";
@@ -43,7 +42,7 @@ export default function RootLayout({ children, session }: LayoutProps) {
                     <Settings />
                   </div>
                   <div className="fixed top-16 right-5">
-                    <CodeDrawer />
+                    <BoardDrawer />
                   </div>
                   <main className="flex min-h-screen w-full">
                     <Sidebar />
