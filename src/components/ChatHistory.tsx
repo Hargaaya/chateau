@@ -7,9 +7,8 @@ import useSWR from "swr";
 import { Skeleton } from "@/components/ui/skeleton";
 import { MessageSquareIcon, PenLine, RefreshCcw, Trash2Icon } from "lucide-react";
 import { ScrollArea } from "@/components/ui/scroll-area";
-import React, { ChangeEvent, MouseEvent, useCallback, useEffect, useMemo } from "react";
+import React, { ChangeEvent, MouseEvent, useEffect, useMemo } from "react";
 import debounce from "@/lib/debounce";
-import { set } from "mongoose";
 
 const ChatHistory = () => {
   const { data: history, error, mutate } = useSWR<ChatHistory[]>("/api/chat/history", fetcher);
@@ -31,8 +30,6 @@ const ChatHistory = () => {
       if (res.ok) mutate();
     });
   };
-
-  const debouncedUpdate = debounce<typeof updateTitle>(updateTitle, 600);
 
   const deleteChat = async (chatId: string): Promise<void> => {
     await fetch("/api/chat/history", {
@@ -72,13 +69,17 @@ const ChatHistory = () => {
         </div>
       )}
 
-      {!error && history && (
-        <ScrollArea className="w-56 h-[50vh] text-white dark:text-black text-sm p-2">
-          {history.map((item: ChatHistory) => (
-            <ChatHistoryItem {...item} isEdit={edit} deleteChat={deleteChat} updateTitle={updateTitle} key={item._id} />
-          ))}
-        </ScrollArea>
-      )}
+      {!error &&
+        history &&
+        (history.length === 0 ? (
+          <p className="text-sm font-light">You have no previous chats</p>
+        ) : (
+          <ScrollArea className="w-56 h-[50vh] text-white dark:text-black text-sm p-2">
+            {history.map((item: ChatHistory) => (
+              <ChatHistoryItem {...item} isEdit={edit} deleteChat={deleteChat} updateTitle={updateTitle} key={item._id} />
+            ))}
+          </ScrollArea>
+        ))}
     </div>
   );
 };

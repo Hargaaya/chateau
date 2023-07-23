@@ -86,7 +86,7 @@ export default class ChatRepository implements ChatRepositoryBase {
     await User.updateOne(
       { _id: this.email },
       {
-        $pull: { "messages._id": id },
+        $pull: { chats: { _id: id } },
       }
     );
   }
