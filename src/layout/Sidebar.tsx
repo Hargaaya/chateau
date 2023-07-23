@@ -3,12 +3,11 @@
 import PlusIcon from "@/assets/PlusIcon";
 import ChatHistory from "@/components/ChatHistory";
 import { Button, buttonVariants } from "@/components/ui/button";
-import { Skeleton } from "@/components/ui/skeleton";
 import { nanoid } from "nanoid";
 import { Session } from "next-auth";
 import { signOut, useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
-import { MouseEvent, Suspense } from "react";
+import { MouseEvent } from "react";
 
 const Sidebar = () => {
   const router = useRouter();
@@ -25,12 +24,7 @@ const Sidebar = () => {
 
   return (
     <div className="fixed top-0 left-0 h-screen lg:flex flex-col max-h-screen border-[0.2px] bg-secondary hidden lg:w-64 p-4">
-      <div className="flex flex-col gap-4">
-        <h2 className="text-2xl font-bold">Previous Chats</h2>
-        <Suspense fallback={<Skeleton className="w-full h-[50vh] rounded-lg bg-gray-300" />}>
-          <ChatHistory />
-        </Suspense>
-      </div>
+      <ChatHistory />
       <div className="fixed bottom-0 left-0 w-full lg:w-64 p-4">
         <Button className="max-w-full mb-4" onClick={() => signOut()}>
           <img className="rounded-full h-6 w-6 mr-2" src={image} alt={name} />
