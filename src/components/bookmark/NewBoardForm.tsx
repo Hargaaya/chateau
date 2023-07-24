@@ -1,7 +1,6 @@
 import { Input } from "@/components/ui/input";
-import { useState, ChangeEvent, MouseEvent } from "react";
+import React, { useState, ChangeEvent, MouseEvent } from "react";
 import { Button } from "../ui/button";
-import React from "react";
 
 type Props = {
   snippet: Snippet;
