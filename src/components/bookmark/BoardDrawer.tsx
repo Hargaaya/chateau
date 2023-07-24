@@ -1,6 +1,4 @@
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import {
   Sheet,
   SheetClose,
@@ -12,8 +10,11 @@ import {
   SheetTrigger,
 } from "@/components/ui/sheet";
 import CodeIcon from "@/assets/CodeIcon";
+import React from "react";
+import BoardList from "./BoardList";
+import { ArrowRightFromLineIcon } from "lucide-react";
 
-const CodeDrawer = () => {
+const BoardDrawer = () => {
   return (
     <Sheet>
       <SheetTrigger className="cursor-pointer" asChild>
@@ -24,15 +25,17 @@ const CodeDrawer = () => {
           <SheetTitle>Boards</SheetTitle>
           <SheetDescription>This is where you can find your saved code snippets.</SheetDescription>
         </SheetHeader>
-        <div className="grid gap-4 py-4"></div>
+        <BoardList />
         <SheetFooter>
           <SheetClose asChild>
-            <Button type="submit">Ooopsie button</Button>
+            <Button variant="ghost" className="w-full">
+              <ArrowRightFromLineIcon size="16px" className="mr-2" />
+              Close
+            </Button>
           </SheetClose>
         </SheetFooter>
       </SheetContent>
     </Sheet>
   );
 };
-
-export default CodeDrawer;
+export default BoardDrawer;

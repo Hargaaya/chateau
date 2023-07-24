@@ -53,7 +53,9 @@ class BoardRepository implements BoardRepositoryBase {
         "boards._id": board._id,
       },
       {
-        $set: { board },
+        $set: {
+          "boards.$": board,
+        },
       }
     );
   }
@@ -63,7 +65,7 @@ class BoardRepository implements BoardRepositoryBase {
     await User.updateOne(
       { _id: this.email },
       {
-        $pull: { "boards._id": id },
+        $pull: { boards: { _id: id } },
       }
     );
   }

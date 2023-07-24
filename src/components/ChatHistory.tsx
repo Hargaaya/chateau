@@ -114,7 +114,7 @@ const ChatHistoryItem = ({ _id, title, isEdit, deleteChat, updateTitle }: ChatHi
 
   return isEdit ? (
     <div className="w-52 h-10 flex items-center gap-2 mb-2 p-2 bg-primary-foreground text-black dark:text-white rounded-md hover:bg-secondary">
-      <Trash2Icon size="16px" onClick={deleteHandler} className="text-red-500 shrink-0 transform hover:text-red-700 hover:scale-110" />
+      <Trash2Icon size="16px" onClick={deleteHandler} className="hover:text-red-500 shrink-0 transform hover:scale-110" />
       <input type="text" value={titleValue} onChange={updateHandler} className="capitalize truncate bg-transparent h-full w-full" />
     </div>
   ) : (
