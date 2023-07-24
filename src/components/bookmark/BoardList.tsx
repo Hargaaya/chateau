@@ -69,6 +69,16 @@ const BoardList = () => {
   return (
     <div className="grid gap-4 py-4">
       {isEdit ? (
+        <React.Fragment>
+          {boards && (
+            <div className="flex flex-col gap-2 w-full mt-2">
+              {boards.map((board: Board) => (
+                <BoardListItem key={board._id} board={board} deleteBoard={deleteBoard} updateBoardName={updateBoardName} />
+              ))}
+            </div>
+          )}
+        </React.Fragment>
+      ) : (
         boards && (
           <Accordion type="single" collapsible>
             {Array.isArray(boards) &&
@@ -100,16 +110,6 @@ const BoardList = () => {
               ))}
           </Accordion>
         )
-      ) : (
-        <React.Fragment>
-          {boards && (
-            <div className="flex flex-col gap-2 w-full mt-2">
-              {boards.map((board: Board) => (
-                <BoardListItem key={board._id} board={board} deleteBoard={deleteBoard} updateBoardName={updateBoardName} />
-              ))}
-            </div>
-          )}
-        </React.Fragment>
       )}
       <Button variant="outline" onClick={toggleEdit}>
         <PenLine size="16px" className="mr-2" />
