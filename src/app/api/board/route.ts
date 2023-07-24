@@ -18,6 +18,8 @@ async function createBoard(req: NextRequest) {
   if (!user?.email) return NextResponse.redirect("/");
 
   const { board } = await req.json();
+  if (!board) return NextResponse.json({ error: "Board is missing" }, { status: 404 });
+
   let boardRepository = new BoardRepository(user.email);
   const data = await boardRepository.createBoard(board);
 
@@ -29,6 +31,8 @@ async function updateBoard(req: NextRequest) {
   if (!user?.email) return NextResponse.redirect("/");
 
   const { board } = await req.json();
+  if (!board) return NextResponse.json({ error: "Board is missing" }, { status: 404 });
+
   let boardRepository = new BoardRepository(user.email);
   await boardRepository.updateBoard(board);
 
@@ -39,9 +43,11 @@ async function deleteBoard(req: NextRequest) {
   const { user } = (await getServerSession(authOptions)) as Session;
   if (!user?.email) return NextResponse.redirect("/");
 
-  const params = req.nextUrl.searchParams as any;
+  const { id } = await req.json();
+  if (!id) return NextResponse.json({ error: "Id is missing" }, { status: 400 });
+
   let boardRepository = new BoardRepository(user.email);
-  await boardRepository.deleteBoard(params.id);
+  await boardRepository.deleteBoard(id);
 
   return new NextResponse(null, { status: 204 });
 }

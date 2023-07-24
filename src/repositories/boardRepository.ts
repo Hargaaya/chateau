@@ -65,7 +65,7 @@ class BoardRepository implements BoardRepositoryBase {
     await User.updateOne(
       { _id: this.email },
       {
-        $pull: { "boards._id": id },
+        $pull: { boards: { _id: id } },
       }
     );
   }
