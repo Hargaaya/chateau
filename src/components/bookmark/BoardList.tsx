@@ -111,9 +111,17 @@ const BoardList = () => {
           </Accordion>
         )
       )}
-      <Button variant="outline" onClick={toggleEdit}>
-        <PenLine size="16px" className="mr-2" />
-      </Button>
+      {boards.length === 0 && (
+        <div className="flex flex-col items-center gap-2">
+          <p className="text-sm">No boards created</p>
+        </div>
+      )}
+      {boards.length > 0 && (
+        <Button variant="outline" onClick={toggleEdit}>
+          <PenLine size="16px" className="mr-2" />
+          Toggle Edit
+        </Button>
+      )}
     </div>
   );
 };

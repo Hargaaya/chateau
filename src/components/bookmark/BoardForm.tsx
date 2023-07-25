@@ -68,7 +68,7 @@ const BoardForm = ({ snippet }: Props) => {
     <React.Fragment>
       {boards && (
         <React.Fragment>
-          <Select onValueChange={(val) => setSelectedBoard(val)} disabled={!Array.isArray(boards)}>
+          <Select onValueChange={(val) => setSelectedBoard(val)} disabled={boards.length === 0}>
             <SelectTrigger className="col-span-2">
               <SelectValue />
             </SelectTrigger>
