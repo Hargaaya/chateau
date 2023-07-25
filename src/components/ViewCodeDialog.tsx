@@ -18,7 +18,7 @@ const ViewCodeDialog = ({ language, content }: Props) => {
       <DialogTrigger asChild>
         <EyeIcon size="16px" className="cursor-pointer hover:text-blue-500" />
       </DialogTrigger>
-      <DialogContent className="sm:max-w-4xl">
+      <DialogContent className="sm:max-w-[calc(100vw-4rem)] max-h-[80vh] overflow-auto">
         <span className="p-2 mt-2">
           <div className="rounded-lg overflow-clip text-md">
             <SyntaxHighlighter language={language} style={getCodeTheme(codeTheme)}>
