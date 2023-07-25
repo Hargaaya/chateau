@@ -6,7 +6,6 @@ import fetcher from "@/lib/fetcher";
 import useSWR from "swr";
 import { Skeleton } from "@/components/ui/skeleton";
 import { MessageSquareIcon, PenLine, RefreshCcw, Trash2Icon } from "lucide-react";
-import { ScrollArea } from "@/components/ui/scroll-area";
 import React, { ChangeEvent, MouseEvent, useEffect, useMemo } from "react";
 import debounce from "@/lib/debounce";
 
@@ -44,7 +43,7 @@ const ChatHistory = () => {
   };
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4 max-h-[calc(100vh-8rem)]">
       <div className="flex items-center justify-between">
         <h2 className="text-2xl font-bold">Previous Chats</h2>
         <Button variant="outline" size="sm" onClick={toggleEdit}>
@@ -63,9 +62,9 @@ const ChatHistory = () => {
       )}
       {!history && (
         <div className="flex flex-col gap-2 w-full">
-          <Skeleton className="w-full h-10 dark:bg-primary" />
-          <Skeleton className="w-full h-10 dark:bg-primary" />
-          <Skeleton className="w-full h-10 dark:bg-primary" />
+          <Skeleton className="w-full h-10 bg-primary" />
+          <Skeleton className="w-full h-10 bg-primary" />
+          <Skeleton className="w-full h-10 bg-primary" />
         </div>
       )}
 
@@ -74,11 +73,11 @@ const ChatHistory = () => {
         (history.length === 0 ? (
           <p className="text-sm font-light">You have no previous chats</p>
         ) : (
-          <ScrollArea className="w-56 h-[50vh] text-white dark:text-black text-sm p-2">
+          <div className="w-full h-full overflow-y-auto text-white dark:text-black text-sm">
             {history.map((item: ChatHistory) => (
               <ChatHistoryItem {...item} isEdit={edit} deleteChat={deleteChat} updateTitle={updateTitle} key={item._id} />
             ))}
-          </ScrollArea>
+          </div>
         ))}
     </div>
   );
@@ -113,12 +112,12 @@ const ChatHistoryItem = ({ _id, title, isEdit, deleteChat, updateTitle }: ChatHi
   };
 
   return isEdit ? (
-    <div className="w-52 h-10 flex items-center gap-2 mb-2 p-2 bg-primary-foreground text-black dark:text-white rounded-md hover:bg-secondary">
+    <div className="h-10 flex items-center gap-2 mb-2 p-2 bg-primary-foreground text-black dark:text-white rounded-md hover:bg-secondary">
       <Trash2Icon size="16px" onClick={deleteHandler} className="hover:text-red-500 shrink-0 transform hover:scale-110" />
       <input type="text" value={titleValue} onChange={updateHandler} className="capitalize truncate bg-transparent h-full w-full" />
     </div>
   ) : (
-    <Link href={`/chat/${_id}`} key={_id} className="w-52 h-10 flex items-center gap-2 mb-2 p-2 bg-primary rounded-md">
+    <Link href={`/chat/${_id}`} key={_id} className="h-10 flex items-center gap-2 mb-2 p-2 bg-primary rounded-md">
       <MessageSquareIcon size="16px" className="shrink-0" />
       <p className="capitalize truncate">{title}</p>
     </Link>
