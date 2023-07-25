@@ -39,7 +39,7 @@ const Highlighter = ({ text }: Props) => {
           const formattedText = removeFirstLine(text);
           const language = getLanguage(text);
           return (
-            <div className="flex flex-col bg-secondary rounded-lg overflow-clip" key={hash(language + formattedText)}>
+            <div className="flex flex-col bg-secondary rounded-lg max-w-2xl" key={hash(language + formattedText)}>
               <span className="flex justify-between items-center p-2">
                 <p>{language}</p>
                 <span className="flex items-center gap-2">

@@ -11,6 +11,7 @@ import { Session } from "next-auth";
 import AuthWrapper from "@/components/AuthWrapper";
 import NextAuthProvider from "@/components/NextAuthProvider";
 import InitProvider from "@/components/InitProvider";
+import Profile from "@/components/Profile";
 
 const kanit = Kanit({ weight: ["300", "400", "500", "600"], subsets: ["latin"] });
 
@@ -38,10 +39,9 @@ export default function RootLayout({ children, session }: LayoutProps) {
             <ReduxProvider preloadedState={preloadedState}>
               <AuthWrapper>
                 <InitProvider>
-                  <div className="fixed top-5 right-5">
+                  <div className="flex flex-col items-center gap-4 fixed top-5 right-5">
+                    <Profile />
                     <Settings />
-                  </div>
-                  <div className="fixed top-16 right-5">
                     <BoardDrawer />
                   </div>
                   <main className="flex min-h-screen w-full">
