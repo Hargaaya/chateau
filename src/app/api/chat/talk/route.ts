@@ -33,25 +33,16 @@ export async function POST(req: NextRequest) {
   const stream = OpenAIStream(response, {
     async onCompletion(completion: string) {
       const chatExists = await User.exists({ _id: user.email, "chats._id": id });
-
-      const message = {
-        ...messages.at(-1),
-      };
-      const reply = {
-        content: completion,
-        role: "assistant",
-        liked: false,
-      } as ChatCompletion;
-
       const chatRepository = new ChatRepository(user?.email as string);
+      messages.push({ content: completion, role: "assistant" });
 
       if (chatExists) {
-        await chatRepository.addChatMessages(id, message, reply);
+        await chatRepository.updateChatMessages(id, messages);
       } else {
         await chatRepository.createChat({
           _id: id as string,
           title: messages[0].content,
-          messages: [message, reply],
+          messages,
         });
       }
     },
