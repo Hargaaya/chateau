@@ -5,7 +5,7 @@ import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Session } from "next-auth";
 import { signOut, useSession } from "next-auth/react";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { LockIcon, MessageSquareIcon, RefreshCcw, SkullIcon, Trash2Icon } from "lucide-react";
+import { LockIcon, MessageSquareIcon, SkullIcon } from "lucide-react";
 import Link from "next/link";
 
 const Profile = () => {
@@ -26,7 +26,11 @@ const Profile = () => {
       <DialogContent className="sm:max-w-[425px]">
         <div className="grid gap-4 py-4">
           <div className="flex flex-col items-center gap-2">
-            <Link target="_blank" href="https://hargaaya.com/" className={`${buttonVariants({ variant: "outline" })} w-full`}>
+            <Link
+              target="_blank"
+              href="https://github.com/Hargaaya/chateau/issues/new"
+              className={`${buttonVariants({ variant: "outline" })} w-full`}
+            >
               <MessageSquareIcon className="mr-2" size="16px" />
               Send Feedback
             </Link>
