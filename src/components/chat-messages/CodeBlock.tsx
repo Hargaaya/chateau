@@ -1,11 +1,10 @@
-import copyToClipboard from "@/utils/copyToClipboard";
 import getCodeTheme from "@/utils/getCodeTheme";
-import { CopyIcon } from "lucide-react";
 import React from "react";
 import SyntaxHighlighter from "react-syntax-highlighter";
 import { useSelector } from "react-redux";
 import { getLocalSettings } from "@/stores/slices/settingsSlice";
 import BoardPopover from "../bookmark/BoardPopover";
+import CopyButton from "../CopyButton";
 
 type Props = {
   language: string;
@@ -21,9 +20,7 @@ const CodeBlock = ({ language, code }: Props) => {
         <p>{language}</p>
         <span className="flex items-center gap-2">
           <BoardPopover language={language} content={code} />
-          <div onClick={() => copyToClipboard(code)}>
-            <CopyIcon className="cursor-pointer" size="16px" />
-          </div>
+          <CopyButton content={code} />
         </span>
       </span>
       <SyntaxHighlighter language={language} style={getCodeTheme(codeTheme)}>
