@@ -1,6 +1,5 @@
 import { Configuration, OpenAIApi } from "openai-edge";
 import { OpenAIStream, StreamingTextResponse } from "ai";
-import ChatCompletion from "@/models/ChatCompletion";
 import mongoConnection from "@/lib/mongoConnection";
 import { Session, getServerSession } from "next-auth";
 import authOptions from "@/lib/auth";

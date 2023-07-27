@@ -6,11 +6,12 @@ import { getLocalSettings } from "@/stores/slices/settingsSlice";
 import { useSWRConfig } from "swr";
 
 type Props = {
+  id: string;
   chat: Chat;
 };
 
-const Chat = ({ chat }: Props) => {
-  const { _id: id, title, messages: initialMessages } = chat;
+const Chat = ({ id, chat }: Props) => {
+  const { title, messages: initialMessages } = chat;
   const model = useSelector(getLocalSettings).model;
   const apiKey = useSelector(getLocalSettings).apiKey;
   const { mutate } = useSWRConfig();
