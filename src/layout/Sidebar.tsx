@@ -1,8 +1,8 @@
 "use client";
 
-import PlusIcon from "@/assets/PlusIcon";
 import ChatHistory from "@/components/ChatHistory";
 import { Button, buttonVariants } from "@/components/ui/button";
+import { PlusIcon } from "lucide-react";
 import { nanoid } from "nanoid";
 import { useRouter } from "next/navigation";
 import { MouseEvent } from "react";
