@@ -1,12 +1,11 @@
 import SyntaxHighlighter from "react-syntax-highlighter";
-import CopyIcon from "@/assets/CopyIcon";
 import { useSelector } from "react-redux";
 import { getLocalSettings } from "@/stores/slices/settingsSlice";
 import React from "react";
 import BoardPopover from "@/components/bookmark/BoardPopover";
 import copyToClipboard from "@/utils/copyToClipboard";
 import getCodeTheme from "@/utils/getCodeTheme";
-import hash from "object-hash";
+import { CopyIcon } from "lucide-react";
 
 type Props = {
   text: string;
@@ -34,12 +33,12 @@ const Highlighter = ({ text }: Props) => {
     <>
       {manipulatedText.map((text, index) => {
         if (index % 2 === 0) {
-          return <p key={hash(index + text)}>{text}</p>;
+          return <p key={index}>{text}</p>;
         } else {
           const formattedText = removeFirstLine(text);
           const language = getLanguage(text);
           return (
-            <div className="flex flex-col bg-secondary rounded-lg max-w-2xl" key={hash(language + formattedText)}>
+            <div className="flex flex-col bg-secondary rounded-lg max-w-2xl" key={index}>
               <span className="flex justify-between items-center p-2">
                 <p>{language}</p>
                 <span className="flex items-center gap-2">
