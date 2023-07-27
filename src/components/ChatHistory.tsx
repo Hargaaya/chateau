@@ -8,8 +8,10 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { MessageSquareIcon, PenLine, RefreshCcw, Trash2Icon } from "lucide-react";
 import React, { ChangeEvent, MouseEvent, useEffect, useMemo } from "react";
 import debounce from "@/lib/debounce";
+import { useParams } from "next/navigation";
 
 const ChatHistory = () => {
+  const params = useParams();
   const { data: history, error, mutate } = useSWR<ChatHistory[]>("/api/chat/history", fetcher);
   const [edit, setEdit] = React.useState(false);
 
@@ -75,7 +77,14 @@ const ChatHistory = () => {
         ) : (
           <div className="w-full h-full overflow-y-auto text-white dark:text-black text-sm">
             {history.map((item: ChatHistory) => (
-              <ChatHistoryItem {...item} isEdit={edit} deleteChat={deleteChat} updateTitle={updateTitle} key={item._id} />
+              <ChatHistoryItem
+                {...item}
+                isCurrent={params.id === item._id}
+                isEdit={edit}
+                deleteChat={deleteChat}
+                updateTitle={updateTitle}
+                key={item._id}
+              />
             ))}
           </div>
         ))}
@@ -86,12 +95,13 @@ const ChatHistory = () => {
 type ChatHistoryItemProps = {
   _id: string;
   title: string;
+  isCurrent: boolean;
   isEdit: boolean;
   deleteChat: (chatId: string) => Promise<void>;
   updateTitle: (chatId: string, title: string) => void;
 };
 
-const ChatHistoryItem = ({ _id, title, isEdit, deleteChat, updateTitle }: ChatHistoryItemProps) => {
+const ChatHistoryItem = ({ _id, title, isCurrent, isEdit, deleteChat, updateTitle }: ChatHistoryItemProps) => {
   const [titleValue, setTitleValue] = React.useState(title);
 
   useEffect(() => {
@@ -111,11 +121,19 @@ const ChatHistoryItem = ({ _id, title, isEdit, deleteChat, updateTitle }: ChatHi
     deleteChat(_id);
   };
 
-  return isEdit ? (
-    <div className="h-10 flex items-center gap-2 mb-2 p-2 bg-primary-foreground text-black dark:text-white rounded-md hover:bg-secondary">
-      <Trash2Icon size="16px" onClick={deleteHandler} className="hover:text-red-500 shrink-0 transform hover:scale-110" />
-      <input type="text" value={titleValue} onChange={updateHandler} className="capitalize truncate bg-transparent h-full w-full" />
-    </div>
+  if (isEdit)
+    return (
+      <div className="h-10 flex items-center gap-2 mb-2 p-2 bg-primary-foreground text-black dark:text-white rounded-md hover:bg-secondary">
+        <Trash2Icon size="16px" onClick={deleteHandler} className="hover:text-red-500 shrink-0 transform hover:scale-110" />
+        <input type="text" value={titleValue} onChange={updateHandler} className="capitalize truncate bg-transparent h-full w-full" />
+      </div>
+    );
+
+  return isCurrent ? (
+    <button disabled key={_id} className="h-10 flex items-center gap-2 mb-2 p-2 bg-primary/80 rounded-md w-full cursor-not-allowed">
+      <MessageSquareIcon size="16px" className="shrink-0" />
+      <p className="capitalize truncate">{title}</p>
+    </button>
   ) : (
     <Link href={`/chat/${_id}`} key={_id} className="h-10 flex items-center gap-2 mb-2 p-2 bg-primary rounded-md">
       <MessageSquareIcon size="16px" className="shrink-0" />
