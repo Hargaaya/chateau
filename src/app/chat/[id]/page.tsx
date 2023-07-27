@@ -37,7 +37,7 @@ export default function Page({ params }: Props) {
           <Skeleton className="h-32 rounded-lg bg-secondary" />
         </div>
       )}
-      {data && <Chat id={id} initialMessages={data.messages} />}
+      {data && <Chat chat={data} />}
     </main>
   );
 }

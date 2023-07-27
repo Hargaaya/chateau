@@ -6,11 +6,11 @@ import { getLocalSettings } from "@/stores/slices/settingsSlice";
 import { useSWRConfig } from "swr";
 
 type Props = {
-  id?: string;
-  initialMessages?: Message[];
+  chat: Chat;
 };
 
-const Chat = ({ id, initialMessages }: Props) => {
+const Chat = ({ chat }: Props) => {
+  const { _id: id, title, messages: initialMessages } = chat;
   const model = useSelector(getLocalSettings).model;
   const apiKey = useSelector(getLocalSettings).apiKey;
   const { mutate } = useSWRConfig();
@@ -33,7 +33,7 @@ const Chat = ({ id, initialMessages }: Props) => {
   return (
     <div className="mx-auto w-full max-w-3xl py-4 flex flex-col">
       <div className="mb-56">
-        <ChatContent messages={messages} />
+        <ChatContent messages={messages} title={title} />
       </div>
       <InputField
         handleSubmit={handleSubmit}
