@@ -7,6 +7,7 @@ abstract class ChatRepositoryBase {
   abstract createChat(chat: Chat): Promise<void>;
   abstract getChatMessages(id: number): Promise<Chat | undefined>;
   abstract addChatMessages(id: string, message: ChatCompletion, reply: ChatCompletion): Promise<void>;
+  abstract updateChatMessages(id: string, messages: ChatCompletion): Promise<void>;
   abstract updateChatTitle(id: string, title: string): Promise<void>;
   abstract deleteChat(id: string): Promise<void>;
 }
@@ -67,6 +68,11 @@ export default class ChatRepository implements ChatRepositoryBase {
         },
       }
     );
+  }
+
+  async updateChatMessages(id: string, messages: ChatCompletion): Promise<void> {
+    await mongoConnection();
+    await User.updateOne({ _id: this.email, "chats._id": id }, { "chats.$.messages": messages });
   }
 
   async updateChatTitle(id: string, title: string): Promise<void> {

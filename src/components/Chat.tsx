@@ -1,18 +1,16 @@
 import { type Message, useChat } from "ai/react";
 import InputField from "@/components/InputField";
-import ChatContent from "./ChatContent";
-import { Suspense } from "react";
-import { Skeleton } from "@/components/ui/skeleton";
+import ChatContent from "./chat-messages/ChatContent";
 import { useSelector } from "react-redux";
 import { getLocalSettings } from "@/stores/slices/settingsSlice";
 import { useSWRConfig } from "swr";
 
 type Props = {
-  id?: string;
-  initialMessages?: Message[];
+  chat: Chat;
 };
 
-const Chat = ({ id, initialMessages }: Props) => {
+const Chat = ({ chat }: Props) => {
+  const { _id: id, title, messages: initialMessages } = chat;
   const model = useSelector(getLocalSettings).model;
   const apiKey = useSelector(getLocalSettings).apiKey;
   const { mutate } = useSWRConfig();
@@ -35,9 +33,7 @@ const Chat = ({ id, initialMessages }: Props) => {
   return (
     <div className="mx-auto w-full max-w-3xl py-4 flex flex-col">
       <div className="mb-56">
-        <Suspense fallback={<Skeleton className="w-full h-[50vh] rounded-lg" />}>
-          <ChatContent messages={messages} />
-        </Suspense>
+        <ChatContent messages={messages} title={title} />
       </div>
       <InputField
         handleSubmit={handleSubmit}

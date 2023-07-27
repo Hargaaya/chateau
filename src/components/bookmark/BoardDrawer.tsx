@@ -9,16 +9,15 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import CodeIcon from "@/assets/CodeIcon";
 import React from "react";
 import BoardList from "./BoardList";
-import { ArrowRightFromLineIcon } from "lucide-react";
+import { ArrowRightFromLineIcon, Code2 } from "lucide-react";
 
 const BoardDrawer = () => {
   return (
     <Sheet>
       <SheetTrigger className="cursor-pointer" asChild>
-        <CodeIcon size="28px" />
+        <Code2 size="28px" />
       </SheetTrigger>
       <SheetContent>
         <SheetHeader>

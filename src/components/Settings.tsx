@@ -1,14 +1,14 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { Dialog, DialogContent, DialogTrigger } from "@/components/ui/dialog";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { SelectGroup } from "@radix-ui/react-select";
-import SettingsIcon from "@/assets/SettingsIcon";
 import { Label } from "@/components/ui/label";
 import { useTheme } from "next-themes";
 import { Input } from "@/components/ui/input";
 import useSettings from "@/hooks/useSettings";
+import { LucideSettings } from "lucide-react";
 
 const Settings = () => {
   const { setTheme } = useTheme();
@@ -25,7 +25,7 @@ const Settings = () => {
   return (
     <Dialog>
       <DialogTrigger>
-        <SettingsIcon size="28px" />
+        <LucideSettings size="28px" />
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <h3 className="text-lg font-bold mt-8 mb-4">Model Settings</h3>
